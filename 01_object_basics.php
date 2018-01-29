@@ -1,5 +1,7 @@
 <?php
 
+// declare(strict_types=1);
+
 class ShopProduct
 {
 	public $title;
@@ -27,6 +29,9 @@ $product = new ShopProduct('Product Name', 'Willa', 'Antonio', 5.99);
 
 // Given wrong data type so it produces error
 // $product = new ShopProduct('Product Name', 'Willa', 'Antonio', []);
+
+// This will produce error ONLY if we have strict type delared = "declare(strict_types=1);"
+// $product = new ShopProduct('Product Name', 'Willa', 'Antonio', "5.99");
 
 
 print "author: {$product->getProducer()} \n";
