@@ -7,7 +7,7 @@ class ShopProduct
 	public $producerLastName;
 	public $price = 0;
 
-	public function __construct($title, $producerFirstName, $producerLastName, $price)
+	public function __construct(string $title, string $producerFirstName, string $producerLastName, float $price)
 	{
 		$this->title 				= $title;
 		$this->producerFirstName 	= $producerFirstName;
@@ -24,5 +24,9 @@ class ShopProduct
 // Example
 
 $product = new ShopProduct('Product Name', 'Willa', 'Antonio', 5.99);
+
+// Given wrong data type so it produces error
+// $product = new ShopProduct('Product Name', 'Willa', 'Antonio', []);
+
 
 print "author: {$product->getProducer()} \n";
