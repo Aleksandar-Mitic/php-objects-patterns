@@ -11,10 +11,10 @@ class ShopProduct
 
 	public function __construct(string $title, string $producerFirstName, string $producerLastName, float $price)
 	{
-		$this->title 				= $title;
-		$this->producerFirstName 	= $producerFirstName;
-		$this->producerLastName 	= $producerLastName;
-		$this->price 				= $price;
+		$this->title             = $title;
+		$this->producerFirstName = $producerFirstName;
+		$this->producerLastName  = $producerLastName;
+		$this->price             = $price;
 	}
 
 	public function getProducer()
@@ -26,6 +26,8 @@ class ShopProduct
 // Example
 
 $product = new ShopProduct('Product Name', 'Willa', 'Antonio', 5.99);
+
+// var_dump($product);
 
 // Given wrong data type so it produces error
 // $product = new ShopProduct('Product Name', 'Willa', 'Antonio', []);
