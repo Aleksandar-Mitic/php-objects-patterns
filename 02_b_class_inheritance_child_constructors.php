@@ -6,8 +6,6 @@
 
 class ShopProduct
 {
-	public $numPages;
-	public $playLength;
 	public $title;
 	public $producerFirstName;
 	public $producerLastName;
@@ -17,16 +15,12 @@ class ShopProduct
 		string $title, 
 		string $producerFirstName, 
 		string $producerLastName, 
-		float  $price,
-		int    $numPages,
-		int    $playLength
+		float  $price
 	) {
 	 	$this->title             = $title;
 		$this->producerFirstName = $producerFirstName;
 		$this->producerLastName  = $producerLastName;
 		$this->price             = $price;
-		$this->numPages          = $numPages;
-		$this->playLength        = $playLength;
 	}
 
 	public function getProducer()
@@ -36,7 +30,7 @@ class ShopProduct
 
 	public function getSummaryLine() 
 	{
-		return "{$this->title} ({$this->producerFirstName}, {$this->producerLastName})";	
+		return "{$this->title} ({$this->producerFirstName}, {$this->producerLastName}) ";	
 	}
 
 }
@@ -48,6 +42,24 @@ class ShopProduct
 
 class CdProduct extends ShopProduct
 {
+	public $playLength;
+
+	public function __construct(
+		string $title,
+		string $producerFirstName,
+		string $producerLastName,
+		int    $price,
+		int    $playLength
+	) {
+		parent::__construct(
+			$title,
+			$producerFirstName,
+			$producerLastName,
+			$price
+		);
+		$this->playLength = $playLength;
+	}
+
 	public function getPlayLength()	
 	{
 		return $this->playLength;
@@ -57,19 +69,39 @@ class CdProduct extends ShopProduct
     // providing their own implementation. Derived classes can extend but also alter the functionality of their parents.
 	public function getSummaryLine()
 	{
-		$base = "{$this->title} ( {$this->producerFirstName} {$this->producerLastName}: ";
+		$base = parent::getSummaryLine();
 		$base .= "Playing time: {$this->playLength} )";
 		return $base;
 	}
 
 } 
 
+echo 'CD <br />';
 $cd = new CdProduct('Pink Floyd', 'Mark', 'Knopfler', 3.99, 299, 157);
 echo $cd->getSummaryLine();
-
+echo '<br />';
 
 class BookProduct extends ShopProduct
 {
+	public $numPages;
+	public function __construct(
+		string $title,
+		string $producerFirstName,
+		string $producerLastName,
+		float  $price,
+		int    $numPages
+
+	) {
+		parent::__construct(
+			$title,
+			$producerFirstName,
+			$producerLastName,
+			$price
+		);
+
+		$this->numPages = $numPages;
+	}
+
 	public function getNumberOfPages()	
 	{
 		return $this->numPages;
@@ -78,15 +110,16 @@ class BookProduct extends ShopProduct
     // providing their own implementation. Derived classes can extend but also alter the functionality of their parents.
 	public function getSummaryLine()
 	{
-		$base = "{$this->title} ( {$this->producerFirstName} {$this->producerLastName}: ";
+		$base = parent::getSummaryLine();
 		$base .= "Number of pages: {$this->numPages} )";
 		return $base;
 	}
 
 } 
 
-// $book = new BookProduct('Master of  Orion', 'Mark', 'Twain', 3.99, 264, 157);
-// echo $book->getSummaryLine();
-// echo $book->getNumberOfPages();
+echo 'Books <br />';
+$book = new BookProduct('Master of  Orion', 'Mark', 'Twain', 3.99, 264, 157);
+echo $book->getSummaryLine();
+echo $book->getNumberOfPages();
 
 
