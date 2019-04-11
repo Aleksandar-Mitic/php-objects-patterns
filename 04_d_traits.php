@@ -1,14 +1,19 @@
 <?php
 
+// A trait is a class-like structure that cannot itself be instantiated but can be incorporated into classes. Any
+// methods defined in a trait become available as part of any class that uses it. A trait changes the structure of a
+// class, but doesn’t change its type. Think of traits as includes for classes.
+
+
 // Code without traits and duplication of methods
 class ShopProduct
 {
 	private $productName;
-	private $price = 10;
+	private $price   = 10;
 	private $taxrate = 17;
 
 	public function __construct(
-		string $productName, 
+		string $productName,
 		float  $price,
 		float  $taxrate
 	) {
@@ -76,7 +81,7 @@ abstract class NewService
 }
 
 
-class NewUtilityService extends Service
+class NewUtilityService extends NewService
 {
 	use PriceUtilities;
 }

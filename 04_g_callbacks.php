@@ -1,5 +1,16 @@
 <?php
 
+// This code is designed to run my various callbacks. It consists of two classes, Product and ProcessSale.
+// Product simply stores $name and $price properties. I’ve made these public for the purposes of brevity.
+// Remember, in the real world, you’d probably want to make your properties private or protected and provide
+// accessor methods. ProcessSale consists of two methods.
+// The first, registerCallback(), accepts an unhinted scalar, tests it, and adds it to a callback array. The
+// test, a built-in function called is_callable(), ensures that whatever I’ve been given can be invoked by a
+// function such as call_user_func() or array_walk().
+// The second method, sale(), accepts a Product object, outputs a message about it, and then loops
+// through the $callback array property. It passes each element to call_user_func(), which calls the code,
+// passing it a reference to the product. All of the following examples will work with the framework.
+
 class Product {
 	public $name;
 	public $price;
@@ -32,26 +43,30 @@ class ProcessSale
 	}
 }
 
-// Now we add a callback function, example: log entries
-// $logger = create_function(
-// 	'$product',
-// 	'print " logging ({$product->name})<br />";'
-// );
+
+// Why are callbacks useful? They allow you to plug functionality into a component at runtime that is not
+// directly related to that component’s core task. By making a component callback aware, you give others the
+// power to extend your code in contexts you don’t yet know about.
 
 
-// Lambda function
+// Anonymous function sent to callback
 $logger = function($product) {
-	print "logging ({$product->name})<br />";
+	print " | logging from callback ({$product->name})<br />";
 };
-
 
 $processor = new ProcessSale();
 $processor->registerCallback($logger);
 $processor->sale(new Product("shoes", 6));
-
 $processor->sale(new Product("coffee", 6));
 
+// Output
+// shoes: processing | logging from callback (shoes)
+// coffee: processing | logging from callback (coffee)
+
 // var_dump($logger);
+
+echo '<hr />';
+
 
 class Mailer
 {
@@ -74,9 +89,9 @@ $processor->sale(new Product("coffee", 6));
 
 
 // Return an anonymous function
-class Totalizer 
+class Totalizer
 {
-	public static function warnAmount() 
+	public static function warnAmount()
 	{
 		return function(Product $product) {
 			if ($product->price > 5) {
